@@ -1,45 +1,102 @@
 #include <iostream>
 #include <string>
-#include <algorithm>
+#include <vector>
 
 using namespace std;
 
-string toLower(string text) {
-    transform(text.begin(), text.end(), text.begin(), ::tolower);
-    return text;
-}
+struct Topic
+{
+    string name;
+    string summary;
+};
 
-int main() {
-    string userInput;
+int main()
+{
+    vector<Topic> topics = {
+        {
+            "programming",
+            "Programming is the process of writing instructions that tell a computer what to do. "
+            "Programmers solve problems using code, algorithms, and logical thinking."
+        },
 
-    cout << "=== Mini AI Assistant ===" << endl;
+        {
+            "artificial intelligence",
+            "Artificial Intelligence allows computers to perform tasks that normally require human intelligence. "
+            "Examples include chatbots, recommendation systems, and image recognition."
+        },
+
+        {
+            "human resource management",
+            "Human Resource Management focuses on recruiting, training, developing, and retaining employees. "
+            "HR helps organizations build an effective workforce."
+        },
+
+        {
+            "cybersecurity",
+            "Cybersecurity protects computer systems and data from threats such as hackers, malware, and phishing attacks."
+        },
+
+        {
+            "object-oriented programming",
+            "Object-Oriented Programming organizes code into objects and classes. "
+            "The main principles are encapsulation, inheritance, polymorphism, and abstraction."
+        }
+    };
+
+    string input;
+
+    cout << "==============================" << endl;
+    cout << "      Study Buddy AI" << endl;
+    cout << "==============================" << endl;
+    cout << "Type a topic to study." << endl;
+    cout << "Type 'topics' to see available subjects." << endl;
     cout << "Type 'exit' to quit.\n" << endl;
 
-    while (true) {
-        cout << "You: ";
-        getline(cin, userInput);
+    while (true)
+    {
+        cout << "Search Topic: ";
+        getline(cin, input);
 
-        string input = toLower(userInput);
-
-        if (input == "exit") {
-            cout << "AI: Goodbye! Have a great day!" << endl;
+        if (input == "exit")
+        {
+            cout << "\nGood luck with your studies!" << endl;
             break;
         }
-        else if (input.find("hello") != string::npos ||
-                 input.find("hi") != string::npos) {
-            cout << "AI: Hello! How can I help you today?" << endl;
+
+        if (input == "topics")
+        {
+            cout << "\nAvailable Topics:\n";
+
+            for (size_t i = 0; i < topics.size(); i++)
+            {
+                cout << "- " << topics[i].name << endl;
+            }
+
+            cout << endl;
+            continue;
         }
-        else if (input.find("name") != string::npos) {
-            cout << "AI: I am a simple C++ AI Assistant." << endl;
+
+        bool found = false;
+
+        for (size_t i = 0; i < topics.size(); i++)
+        {
+            if (input == topics[i].name)
+            {
+                cout << "\n========== SUMMARY ==========\n";
+                cout << topics[i].summary << endl;
+                cout << "=============================\n"
+                    << endl;
+
+                found = true;
+                break;
+            }
         }
-        else if (input.find("time") != string::npos) {
-            cout << "AI: I can't check real time yet, but you can add that feature!" << endl;
-        }
-        else if (input.find("help") != string::npos) {
-            cout << "AI: I can answer simple questions and chat with you." << endl;
-        }
-        else {
-            cout << "AI: I'm still learning. Can you ask something else?" << endl;
+
+        if (!found)
+        {
+            cout << "\nSorry, I haven't learned that topic yet." << endl;
+            cout << "Try 'topics' to see available subjects.\n"
+                << endl;
         }
     }
 
